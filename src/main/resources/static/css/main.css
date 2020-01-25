@@ -1,0 +1,44 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.container-fluid .bg-dark {
+    position: relative;
+    height: 100%;
+}
+
+#row1 {
+    position: relative;
+    height: 100%;
+}
+
+/*.container-fluid .bg-dark {*/
+/*    height: 100vh;*/
+/*}*/
+
+.flex-column .col-md-4 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+#mymo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+/*.container-fluid bg-light {*/
+/*    height: 100vh;*/
+/*}*/
+
+
+
