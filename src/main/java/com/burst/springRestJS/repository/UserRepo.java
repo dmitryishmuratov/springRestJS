@@ -1,4 +1,4 @@
-package com.burst.springRestJS.repositories;
+package com.burst.springRestJS.repository;
 
 import com.burst.springRestJS.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

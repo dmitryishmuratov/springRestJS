@@ -1,59 +1,48 @@
-$(function () {
-    getTable();
+$(document).ready(function () {
+getTable();
 });
 
-function getTable() {
-    fetch('/admin/api/all')
-        .then ( function (response) {
-                if (response.status !== 200) {
-                   // console.log(response.status);
-                    return;
-                }
-                response.json().then(function (listUsers) {
-                    let htmlTable = "";
-                    for (let i = 0; i < listUsers.length; i++) {
-                        let htmlRole = listUsers[i].roles[0].role;
+async function getTable() {
+    const response = await fetch('/admin/api/all');
+    const listUsers = await response.json();
+    htmlTable(listUsers);
+}
 
-                        htmlTable += '<tr id="list">' +
-                            '<td id="tableId" class="text-center">' + listUsers[i].id + '</td>' +
-                            '<td id="tableUsername">' + listUsers[i].username + '</td>' +
-                            '<td id="tableEmail">' + listUsers[i].email + '</td> ' +
-                            '<td id="tablePassword" hidden>' + listUsers[i].password + '</td>' +
-                            '<td id="tableRole">' + htmlRole + '</td>' +
-                            '<td><button id="editUserBtn" type="button" class="btn btn-primary" ' +
-                            'data-toggle="modal" data-target="#editUser" data-id="${listUsers.id}">Update</button></td>' +
-                            '</tr>';
-                    }
-                    $("#tableUser #list").remove();
-                    $("#tableUser").append(htmlTable);
-                });
-            }
-        )
-        .catch(function (err) {
-            console.log('Fetch Error :-S', err);
-        });
+function htmlTable(listUsers) {
+    let htmlTable = "";
+    for (let data of listUsers) {
+        htmlTable += `<tr id="list">
+                            <td id="tableId">${data.id}</td>
+                            <td id="tableUsername">${data.username}</td>
+                            <td id="tableEmail">${data.email}</td>
+                            <td id="tablePassword" hidden>${data.password}</td>
+                            <td id="tableRole">${data.roles[0].role}</td>
+                            <td><button id = "editUserBtn"  type = "button"
+                                 class = "btn btn-primary" data-toggle = "modal"
+                                 data-target = "#editUser"
+                                 data-id = "${listUsers.id}" >Update</button></td>
+                            </tr>`;
+    }
+    $("#tableUser #list").remove();
+    $("#tableUser").append(htmlTable);
 }
 
 // addUser
 
 $("#addFormUser").on("click", function (event) {
     event.preventDefault();
-    addForm();
+    addUser();
     $(":input", "#addForm").val("");
 });
 
-// $("#resetTable").on("click", function () {
-//     getTable();
-// });
-
-async function addForm() {
+async function addUser() {
+    let url = "/admin/api/add";
     let user = {
         'username': $("#addUsername").val(),
         'email': $("#addEmail").val(),
         'password': $("#addPassword").val(),
         'role': $("#addRole").val()
     };
-    let url = "/admin/api/add";
     let dateUser = {
         method: 'POST',
         headers: {
@@ -64,7 +53,7 @@ async function addForm() {
     };
     const response = await fetch(url, dateUser);
     const data = await response.json();
-    getTable();
+    await getTable();
 }
 
 // update
@@ -73,14 +62,13 @@ $(document).on("click", "#editUserBtn", function () {
 
     let id = $(this).closest("tr").find("#tableId").text();
 
-
     async function getUser(id) {
         let resp = await fetch('/admin/api/get/' + id);
         let data = await resp.json();
         return data;
     }
 
-    (async function main() {
+    (async function() {
         let user = await getUser(id);
         $('#updateId').val(user.id);
         $('#updateUsername').val(user.username);
@@ -94,7 +82,6 @@ $(document).on("click", "#editUserBtn", function () {
         } else {
             $('#updateRole option:contains("user")').prop("selected", true);
         }
-        console.log(user);
         getTable();
     })();
 });
@@ -113,31 +100,24 @@ async function updateForm() {
         'password': $("#updatePassword").val(),
         'role': $("#updateRole").val()
     };
-    console.log(user);
+
     let option = {
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: {"Content-Type": "application/json"},
         method: 'PUT',
         body: JSON.stringify(user),
     };
+
     let url = "/admin/api/edit";
     const response = await fetch(url, option);
     const data = await response.json();
-    getTable();
-    console.log(data);
+    await getTable();
 }
 
 // delete
 
-// $('#deleteUser').click(function (del) {
-//     del.preventDefault();
-//     deleteUser();
-// });
-
-$(document).on('click', '#deleteUser',function (del) {
+$(document).on('click', '#deleteUser', function (del) {
     del.preventDefault();
-    deleteUser();
+    deleteUser().then(r => r.toLocaleString());
 });
 
 async function deleteUser() {
@@ -145,10 +125,9 @@ async function deleteUser() {
     const response = await fetch("/admin/api/delete/" + id, {
         method: 'DELETE',
         headers: {
-            "Content-Type" : 'application/json'
+            "Content-Type": 'application/json'
         }
     });
     const data = await response.json();
-    getTable();
-    console.log(data);
+    await getTable();
 }

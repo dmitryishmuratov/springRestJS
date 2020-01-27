@@ -1,4 +1,4 @@
-package com.burst.springRestJS.configurations;
+package com.burst.springRestJS.configuration;
 
 import com.burst.springRestJS.model.Role;
 import com.burst.springRestJS.model.User;

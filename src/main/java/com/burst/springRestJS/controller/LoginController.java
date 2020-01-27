@@ -1,4 +1,4 @@
-package com.burst.springRestJS.controllers;
+package com.burst.springRestJS.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

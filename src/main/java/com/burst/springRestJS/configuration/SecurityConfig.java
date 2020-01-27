@@ -1,6 +1,6 @@
-package com.burst.springRestJS.configurations;
+package com.burst.springRestJS.configuration;
 
-import com.burst.springRestJS.services.UserDetailsServiceImpl;
+import com.burst.springRestJS.service.UserDetailsServiceImpl;
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

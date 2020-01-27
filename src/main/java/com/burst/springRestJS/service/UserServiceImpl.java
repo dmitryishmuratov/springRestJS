@@ -1,10 +1,10 @@
-package com.burst.springRestJS.services;
+package com.burst.springRestJS.service;
 
 import com.burst.springRestJS.model.Role;
 import com.burst.springRestJS.model.User;
 import com.burst.springRestJS.model.dto.UserDTO;
-import com.burst.springRestJS.repositories.RoleRepo;
-import com.burst.springRestJS.repositories.UserRepo;
+import com.burst.springRestJS.repository.RoleRepo;
+import com.burst.springRestJS.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
         updateUser.setUsername(user.getUsername());
         updateUser.setEmail(user.getEmail());
         if (user.getPassword() != null && !user.getPassword().isEmpty()) {
-            updateUser.setPassword(user.getPassword());
+            updateUser.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         initRole(updateUser, user.getRole());
         userRepo.save(updateUser);

@@ -1,7 +1,7 @@
-package com.burst.springRestJS.controllers;
+package com.burst.springRestJS.controller;
 
 import com.burst.springRestJS.model.User;
-import com.burst.springRestJS.services.UserService;
+import com.burst.springRestJS.service.UserService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

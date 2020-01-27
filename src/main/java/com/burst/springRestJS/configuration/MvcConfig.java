@@ -1,4 +1,4 @@
-package com.burst.springRestJS.configurations;
+package com.burst.springRestJS.configuration;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,8 @@
-package com.burst.springRestJS.controllers;
+package com.burst.springRestJS.controller;
 
 import com.burst.springRestJS.model.User;
 import com.burst.springRestJS.model.dto.UserDTO;
-import com.burst.springRestJS.services.UserService;
+import com.burst.springRestJS.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +29,7 @@ public class AdminRestController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Integer id) {
+    public ResponseEntity<User> getUser(@PathVariable("id") Integer id) {
         User user = userService.findById(id);
         return ResponseEntity.ok(user);
     }
@@ -47,19 +47,11 @@ public class AdminRestController {
 
     @PutMapping("/edit")
     public ResponseEntity<User> editUser(@RequestBody UserDTO user) {
-//        User userUpdate = userService.findById(user.getId());
-//        userUpdate.setUsername(user.getUsername());
-//        userUpdate.setEmail(user.getEmail());
-//        userUpdate.setPassword(user.getPassword());
-//        userService.initRole(userUpdate, user.getRole());
-//        userService.save(userUpdate);
-
         return ResponseEntity.ok(userService.editUser(user));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity delete(@PathVariable Integer id) {
+    public void delete(@PathVariable Integer id) {
         this.userService.deleteById(id);
-        return (ResponseEntity) ResponseEntity.ok();
     }
 }
