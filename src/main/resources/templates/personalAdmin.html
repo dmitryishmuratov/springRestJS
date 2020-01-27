@@ -16,27 +16,30 @@
 <div th:replace="fragments/header :: header"></div>
 <div class="container-fluid d-flex h-100 flex-column">
     <div class="row" id="row1">
-    <div id="menuVertical" class="navbar col-2 sidebar bg-light">
-        <nav class="nav  nav-pills nav-fill flex-column fixed-top position-absolute">
-            <a class="nav-item nav-link active" th:href="@{/user}">User</a>
-        </nav>
-    </div>
+        <div id="menuVertical" class="navbar col-2 sidebar bg-light">
+            <nav class="nav  nav-pills nav-fill flex-column fixed-top position-absolute">
+                <a class="nav-item nav-link " th:href="@{/admin}">Admin</a>
+                <a class="nav-item nav-link active" th:href="@{/user}">User</a>
+            </nav>
+        </div>
 
-    <div class="col-10">
-        <h2 th:text="${message}"></h2>
-        <dl class="row">
-            <dt class="col-sm-3">Name:</dt>
-            <dd class="col-sm-9"><span th:text="${user.username}"/></dd>
-            <dt class="col-sm-3">Email:</dt>
-            <dd class="col-sm-9"><span th:text="${user.email}"></span></dd>
-            <dt class="col-sm-3">Password:</dt>
-            <dd class="col-sm-9"><span th:text="${user.password}"></span></dd>
-            <dt class="col-sm-3">Role:</dt>
-            <dd class="col-sm-9"><span th:text="${user.roles}"></span></dd>
-        </dl>
-    </div>
+        <div class="col-10">
+            <div>
+            <h2 th:text="${message}"></h2>
+            </div>
+            <dl class="row">
+                <dt class="col-sm-3">Name:</dt>
+                <dd class="col-sm-9"><span th:text="${user.username}"/></dd>
+                <dt class="col-sm-3">Email:</dt>
+                <dd class="col-sm-9"><span th:text="${user.email}"></span></dd>
+                <dt class="col-sm-3">Password:</dt>
+                <dd class="col-sm-9"><span th:text="${user.password}"></span></dd>
+                <dt class="col-sm-3">Role:</dt>
+                <dd class="col-sm-9"><span th:text="${user.roles}"></span></dd>
+            </dl>
+        </div>
 
-</div>
+    </div>
 </div>
 </div>
 

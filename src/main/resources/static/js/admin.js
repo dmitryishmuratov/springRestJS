@@ -58,33 +58,34 @@ async function addUser() {
 
 // update
 
-$(document).on("click", "#editUserBtn", function () {
-
+$(document).on('click', '#editUserBtn', function (writeData) {
+    writeData.preventDefault();
     let id = $(this).closest("tr").find("#tableId").text();
-
-    async function getUser(id) {
-        let resp = await fetch('/admin/api/get/' + id);
-        let data = await resp.json();
-        return data;
-    }
-
-    (async function() {
-        let user = await getUser(id);
-        $('#updateId').val(user.id);
-        $('#updateUsername').val(user.username);
-        $('#updateEmail').val(user.email);
-        $('#updatePassword').hidden.val(user.password);
-
-        let role = $('#updateRole').val(user.role);
-        let admin = "admin";
-        if (role === admin) {
-            $('#updateRole option:contains("admin")').prop("selected", true);
-        } else {
-            $('#updateRole option:contains("user")').prop("selected", true);
-        }
-        getTable();
-    })();
+    getUser(id);
 });
+
+async function getUser(id) {
+    const response = await fetch('/admin/api/get/' + id);
+    const data = await response.json();
+    writeUser(data);
+}
+
+function writeUser(data) {
+    $('#updateId').val(data.id);
+    $('#updateUsername').val(data.username);
+    $('#updateEmail').val(data.email);
+    $('#updatePassword').hidden.val(data.password);
+
+    let role = $('#updateRole').val(data.role);
+    let admin = "admin";
+    if (role === admin) {
+        $('#updateRole option:contains("admin")').prop("selected", true);
+    } else {
+        $('#updateRole option:contains("user")').prop("selected", true);
+    }
+    getTable().then(r => r.toString());
+}
+
 
 $("#updateFormUser").on("click", function (event) {
     event.preventDefault();
@@ -122,7 +123,7 @@ $(document).on('click', '#deleteUser', function (del) {
 
 async function deleteUser() {
     let id = $("#updateId").val();
-    const response = await fetch("/admin/api/delete/" + id, {
+    const response = await fetch('/admin/api/delete/' + id, {
         method: 'DELETE',
         headers: {
             "Content-Type": 'application/json'
